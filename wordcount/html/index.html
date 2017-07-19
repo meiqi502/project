@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>wordcount</title>
+</head>
+<style>
+.f-red{
+	color: red;
+}
+</style>
+<body>
+	<h1><center>限制输入字数</center></h1>
+	<div style="text-align: center; position: relative;">
+		<textarea class="js-input" cols="100" rows="3"></textarea>
+		<span class="tip js-tip"></span>
+	</div>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script src="../js/wordcount.js"></script>
+	<script>
+		$('.js-input').wordCount();
+	</script>
+</body>
+</html>
