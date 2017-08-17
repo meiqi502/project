@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	ul{
+		margin: 0;
+		padding: 0;
+	}
+	.top{
+		background-color: lightgreen;
+		height: 100px;
+		width: 40%;
+	}
+	.item{
+		background-color: rgba(0,0,0,.4);
+		color: #ffffff;
+		font-size: 14px;
+		height: 30px;
+		line-height: 30px;
+		width: 40%;
+		border-radius: 15px;
+		margin-bottom: 10px;
+	}
+	.wrap{
+		height: 300px;
+		border: 1px solid gray;
+		overflow: hidden;
+	}
+	.text{
+		width: 34%;
+	}
+	.post{
+		width: 5%;
+	}
+	</style>
+</head>
+<body>
+	<div class="top"></div>
+ 	<div class="wrap js-comment-wrap">
+ 		<ul class="list js-comment-list">
+ 			
+ 		</ul>
+ 	</div>
+ 	<div class="input">
+		<input class="text js-text"/>
+	</div>
+
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function () {
+		new danmu();
+	})
+		function danmu() {
+			var $text = $('.js-text');
+			var $list = $('.js-comment-list');
+			var $wrap = $('.js-comment-wrap');
+			var $items;
+			var listenTimer;
+			var currentNode;
+			var nextNode;
+			var list = [
+				{"content": "this is a danmu from mickey"},
+				{"content": "what about you?"},
+				{"content": "i am fine, thank you!"},
+				{"content": "i love music"},
+				{"content": "haha! she is a girl"}
+				// {"content": "yesterday once more"},
+				// {"content": "season in the sun"},
+				// {"content": "gone with me"},
+				// {"content": "you like something to drink?"}
+			]
+			function init() {
+				var html = '';
+				list.forEach(function (item, index) {
+					html += '<li class="item js-item">' + item.content + '</li>';
+				});
+				$list.append($(html));
+
+				function loop() {
+					$items = $('.js-item');
+					currentNode = $items.first();
+					nextNode = currentNode.next();
+					var height = currentNode.outerHeight(true);
+
+					$list.css({
+						'transform': 'translate3d(0px,-' + height + 'px, 0px )',
+						'-wekit-transform': 'translate3d(0px,-' + height + 'px, 0px )',
+						'transition': 'transform 750ms',
+						'-wekit-transition': '-wekit-transform 750ms'
+					});
+
+					$list.on('transitionend', function (ev) {
+						$list.append(currentNode);
+						$list.off('transitionend');
+						$list.css({
+							'transform': 'translate3d(0px, 0px, 0px )',
+							'-wekit-transform': 'translate3d(0px, 0px, 0px )',
+							'transition': 'transform 0s',
+							'-wekit-transition': '-wekit-transform 0s'
+						})
+					})
+					setTimeout(loop, 2000);
+				}
+
+				function listen() {
+					console.log($list.height());
+					console.log($wrap.height());
+					if ($list.height() > $wrap.height()) {
+						loop();
+						listenTimer && clearTimeout(listenTimer);
+						return;
+					};
+					listenTimer = setTimeout(listen, 1000);
+				}
+				listen();
+			}
+
+			function bindEvent() {
+				$text.on('keypress', function (ev) {
+					if (ev.keyCode == '13') {
+						var value = $.trim($text.val());
+						if (!value) {return};
+						var $item = $('<li class="item js-item"></li>');
+						$item.text(value);
+						console.log(nextNode);
+						if (nextNode) {
+							$item.insertAfter(nextNode);
+						} else {
+							$list.append($item);
+						}
+						
+					}
+				})
+			}
+			init();
+			bindEvent();
+		}
+	</script>
+
+</body>
+</html>
