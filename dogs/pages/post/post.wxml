@@ -1,0 +1,122 @@
+<!--post.wxml-->
+<view class="page">
+	<!--swiper begin-->
+	<swiper indicator-dots="{{indicatorDots}}"
+	  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+	  <block wx:for="{{imgUrls}}">
+	    <swiper-item>
+	      <image src="{{item}}" class="slide-image"/>
+	    </swiper-item>
+	  </block>
+	</swiper>
+	<!--swiper end-->
+
+	<view class="weui-cells weui-cells_after-title">
+	    <view class="weui-cell weui-cell_input">
+	        <view class="weui-cell__hd">
+	            <view class="weui-label">真实姓名:</view>
+	        </view>
+	        <view class="weui-cell__bd">
+	            <input class="weui-input" placeholder=""/>
+	        </view>
+			<view class="weui-cell__ft">
+	            <radio-group class="radio-group" bindchange="radioChange">
+					<radio value="mail" checked="checked"/>男
+					<radio value="femail"/>女
+				</radio-group>
+	        </view>
+	    </view>
+
+		<view class="weui-cell weui-cell_select">
+			<view class="weui-cell__hd weui-cell__hd_in-select-after">
+				<view class="weui-label">所在区域：</view>
+			</view>
+			<view class="weui-cell__bd">
+				<picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+					<view class="weui-select weui-select_in-select-after">
+					{{multiArray[0][multiIndex[0]]}} {{multiArray[1][multiIndex[1]]}} {{multiArray[2][multiIndex[2]]}}
+					</view>
+				</picker>
+	        </view>
+		</view>
+		
+		<view class="weui-cell weui-cell_input">
+			<view class="weui-cell__hd">
+				<view class="weui-label">详细地址:</view>
+			</view>
+			<view class="weui-cell__bd">
+				<input class="weui-input" placeholder="街道 楼牌号等" />
+			</view>
+		</view>
+	</view>
+
+	<view style="position: relative">
+		<image style="width: 100%; height: 200px; background-color: #eeeeee;" mode="scaleToFill" src="{{image.src}}"></image>
+		<view class="radar"></view>
+		<view class="showTip">
+			<view style="text-align:center">
+				附近有666只宠物
+			</view>
+			<view style="text-align:center">
+				等待收养
+			</view>
+		</view>
+	</view>
+
+	<view class="weui-cells weui-cells_after-title">
+		<view class="weui-cell weui-cell_select">
+			<view class="weui-cell__hd weui-cell__hd_in-select-after">
+				<view class="weui-label">收养类型：</view>
+			</view>
+			<view class="weui-cell__bd">
+				<picker bindchange="bindAnimalChange" value="{{animalKey}}" range="{{animals}}">
+					<view class="weui-select weui-select_in-select-after">{{animals[animalKey]}}</view>
+				</picker>
+			</view>
+		</view>
+		
+		<view class="weui-cell weui-cell_input">
+	        <view class="weui-cell__hd">
+	            <view class="weui-label">收养时间:</view>
+	        </view>
+	        <view class="weui-cell__bd">
+	            <picker mode="date" value="{{date}}" start="2017-01-01" end="2050-01-01" bindchange="bindBeginDateChange">
+					<view class="weui-input">{{beginDate}}</view>
+				</picker>
+	        </view>
+			至
+			<view class="weui-cell__bd">
+				<picker mode="date" value="{{date}}" start="2017-01-01" end="2050-01-01" bindchange="bindEndDateChange">
+					<view class="weui-input" style="text-align:center">{{endDate}}</view>
+				</picker>
+			</view>
+	    </view>
+		<view class="weui-cell weui-cell_input">
+			<view class="weui-cell__hd">
+				<view class="weui-label">收养价格:</view>
+			</view>
+			<view class="weui-cell__bd">
+				<input class="weui-input" placeholder="" />
+			</view>
+			<view class="weui-cell__ft">
+				<text>元/天</text>
+			</view>
+		</view>
+	</view>
+	<checkbox-group bindchange="bindAgreeChange">
+		<label class="weui-agree" for="weuiAgree">
+			<view class="weui-agree__text">
+				<checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}" />
+				<view class="weui-agree__checkbox-icon">
+					<icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" wx:if="{{isAgree}}"></icon>
+				</view>
+				我已阅读并同意<navigator url="" class="weui-agree__link">《收养领养协议》</navigator>
+			</view>
+		</label>
+	</checkbox-group>
+
+	<view class="weui-btn-area">
+		<button class="weui-btn" type="primary" bindtap="showTopTips">确定</button>
+	</view>
+
+</view>
